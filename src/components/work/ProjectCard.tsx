@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ProjectCaseStudy } from "@/lib/data/projectsData";
 import { useLanguage } from "@/context/LanguageContext";
@@ -9,12 +10,12 @@ import { CoinItem } from "../gamification/CoinItem";
 import {
   ExternalLink,
   ArrowUpRight,
-  Sparkles,
   Activity,
   QrCode,
   Kanban,
   ShoppingBag,
-  CloudSun
+  Sparkles,
+  Layers
 } from "lucide-react";
 
 interface ProjectCardProps {
@@ -32,230 +33,196 @@ export function ProjectCard({ project, onOpenCaseStudy, index }: ProjectCardProp
     onOpenCaseStudy(project);
   };
 
-  // Render contextual simulated mini UI mockup
-  const renderMockup = () => {
-    switch (project.mockupType) {
-      case "erp-dashboard":
-        return (
-          <div className="w-full h-44 rounded-xl bg-slate-900/90 border border-slate-800 p-3 flex flex-col justify-between font-mono text-[10px] select-none overflow-hidden relative group-hover:border-cyan-500/40 transition-colors">
-            {/* Top Bar */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-cyan-400 font-bold">DOCTECH OS // DR. DASHBOARD</span>
-              </div>
-              <span className="text-slate-400">PATIENT ID: #MED-4820</span>
-            </div>
-            {/* 3 Tab Simulation */}
-            <div className="grid grid-cols-3 gap-1.5 my-1 text-[9px]">
-              <div className="bg-cyan-950/40 border border-cyan-500/40 text-cyan-300 p-1.5 rounded">
-                1. General Profile
-              </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 text-slate-300 p-1.5 rounded">
-                2. Timeline &amp; Scans
-              </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 text-slate-300 p-1.5 rounded">
-                3. WhatsApp AI Queue
-              </div>
-            </div>
-            {/* Status & Metrics */}
-            <div className="flex items-center justify-between bg-slate-950/80 p-2 rounded border border-slate-800/70 text-[9px]">
-              <div className="flex items-center gap-1 text-emerald-400">
-                <Activity className="w-3 h-3" />
-                <span>Hermes AI: Active (Qwen 3.5)</span>
-              </div>
-              <span className="text-slate-400">Double-Booking Risk: 0%</span>
-            </div>
-          </div>
-        );
-
-      case "event-telemetry":
-        return (
-          <div className="w-full h-44 rounded-xl bg-slate-900/90 border border-slate-800 p-3 flex flex-col justify-between font-mono text-[10px] select-none overflow-hidden relative group-hover:border-rose-500/40 transition-colors">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <div className="flex items-center gap-1.5 text-rose-400 font-bold">
-                <QrCode className="w-3.5 h-3.5" />
-                <span>11TH AUTOMOTIVE SUMMIT GATE</span>
-              </div>
-              <span className="text-emerald-400">1,200+ ATTENDEES</span>
-            </div>
-            <div className="flex items-center justify-between my-2 p-2 rounded bg-slate-950/80 border border-slate-800">
-              <span className="text-slate-300">Fast Gate QR Telemetry</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">
-                2.8s Print Speed
-              </span>
-            </div>
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-rose-500 to-cyan-400 w-4/5" />
-            </div>
-          </div>
-        );
-
-      case "kanban-crm":
-        return (
-          <div className="w-full h-44 rounded-xl bg-slate-900/90 border border-slate-800 p-3 flex flex-col justify-between font-mono text-[10px] select-none overflow-hidden relative group-hover:border-amber-500/40 transition-colors">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-amber-400 font-bold flex items-center gap-1">
-                <Kanban className="w-3 h-3" />
-                <span>PRIME CRM // KANBAN PIPELINE</span>
-              </span>
-              <span className="text-slate-400">WINTER DROP 2026</span>
-            </div>
-            <div className="grid grid-cols-3 gap-1.5 my-1">
-              <div className="bg-slate-950 p-2 rounded border border-slate-800">
-                <span className="text-[8px] text-slate-500 block">Cutting</span>
-                <span className="text-amber-300 font-bold">45 units</span>
-              </div>
-              <div className="bg-slate-950 p-2 rounded border border-slate-800">
-                <span className="text-[8px] text-slate-500 block">Printing</span>
-                <span className="text-cyan-300 font-bold">80 units</span>
-              </div>
-              <div className="bg-slate-950 p-2 rounded border border-slate-800">
-                <span className="text-[8px] text-slate-500 block">Dispatched</span>
-                <span className="text-emerald-300 font-bold">120 units</span>
-              </div>
-            </div>
-            <div className="text-[9px] text-slate-400 flex justify-between">
-              <span>Inventory Mismatch: 0</span>
-              <span className="text-amber-400">XLSX Export: Ready</span>
-            </div>
-          </div>
-        );
-
-      case "marketplace":
-        return (
-          <div className="w-full h-44 rounded-xl bg-slate-900/90 border border-slate-800 p-3 flex flex-col justify-between font-mono text-[10px] select-none overflow-hidden relative group-hover:border-emerald-500/40 transition-colors">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-emerald-400 font-bold flex items-center gap-1">
-                <ShoppingBag className="w-3 h-3" />
-                <span>SPORT CYCLE MARKETPLACE</span>
-              </span>
-              <span className="text-xs">🏅 FINALIST</span>
-            </div>
-            <div className="p-2 rounded bg-slate-950/80 border border-slate-800 flex items-center justify-between">
-              <div>
-                <span className="text-slate-200 block font-bold">Pro Spin Bike V2</span>
-                <span className="text-slate-400 text-[9px]">Ismailia, Egypt</span>
-              </div>
-              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">
-                Score: 9.6/10
-              </span>
-            </div>
-            <div className="text-[9px] text-slate-400 flex justify-between">
-              <span>Cloudflare Edge TTFB: 55ms</span>
-              <span className="text-emerald-400">Verified Condition</span>
-            </div>
-          </div>
-        );
-
+  // Get real project screenshot if available
+  const getProjectImage = () => {
+    switch (project.id) {
+      case "craft-crew-automotive":
+        return "/images/projects/craft-crew-dashboard.png";
+      case "prime-brand-crm-app":
+        return "/images/projects/prime-emblem.jpg";
+      case "sport-cycle-app":
+        return "/images/projects/sport-cycle-cover.png";
       default:
-        return (
-          <div className="w-full h-44 rounded-xl bg-slate-900/90 border border-slate-800 p-3 flex flex-col justify-between font-mono text-[10px] select-none overflow-hidden relative group-hover:border-sky-500/40 transition-colors">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-              <span className="text-sky-400 font-bold flex items-center gap-1">
-                <CloudSun className="w-3 h-3" />
-                <span>AETHERCAST NEO-BRUTALISM</span>
-              </span>
-              <span className="text-slate-400">ISMAILIA • 24°C</span>
-            </div>
-            <div className="p-2 rounded bg-slate-950/80 border border-slate-800 flex justify-between items-center">
-              <span className="text-slate-300">Adaptive Meteorological Theme</span>
-              <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 font-bold">
-                15s Auto-Sync
-              </span>
-            </div>
-            <div className="text-[9px] text-slate-400">
-              Lighthouse Score: 100/100 • Zero API Key
-            </div>
-          </div>
-        );
+        return null;
     }
   };
 
+  const projectImage = getProjectImage();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      onClick={handleCardClick}
-      className="group relative rounded-2xl bg-slate-950/80 border border-slate-800/80 hover:border-cyan-500/50 p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(0,240,255,0.18)] transition-all duration-300 flex flex-col justify-between cursor-pointer backdrop-blur-md"
+      className="group relative rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-blue-500/50 p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_12px_36px_rgba(0,240,255,0.1)] hover:-translate-y-1 backdrop-blur-md"
     >
-      {/* Top Card Bar with Category & Coin Placement */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <span
-            className="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider"
-            style={{
-              backgroundColor: `${project.accentColor}18`,
-              color: project.accentColor,
-              border: `1px solid ${project.accentColor}40`
-            }}
-          >
-            {project.category}
-          </span>
-          <span className="text-xs font-mono text-slate-500">{project.year}</span>
+      {/* Top Meta Header */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span
+              className="px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold"
+              style={{
+                backgroundColor: `${project.accentColor}15`,
+                color: project.accentColor,
+                border: `1px solid ${project.accentColor}30`
+              }}
+            >
+              {project.category}
+            </span>
+            <span className="text-[11px] font-mono text-slate-500">{project.year}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Hidden Coin inside Automotive Summit Card */}
+            {project.id === "craft-crew-automotive" && (
+              <CoinItem id="coin-project-automotive" />
+            )}
+
+            <button
+              onClick={handleCardClick}
+              className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 group-hover:border-blue-500/40 text-slate-400 group-hover:text-cyan-400 transition-colors cursor-pointer"
+              title="Open full case study"
+            >
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          </div>
         </div>
 
-        {/* HIDDEN COIN PLACEMENT */}
-        {project.id === "doctech-os" && (
-          <div onClick={(e) => e.stopPropagation()}>
-            <CoinItem id="coin-doctech-preview" />
-          </div>
-        )}
-        {project.id === "craft-crew-automotive" && (
-          <div onClick={(e) => e.stopPropagation()}>
-            <CoinItem id="coin-automotive-badge" />
-          </div>
-        )}
-      </div>
+        {/* Project Visual / Real Dashboard Screenshot */}
+        <div
+          onClick={handleCardClick}
+          className="relative w-full h-48 sm:h-52 rounded-xl overflow-hidden bg-slate-900 border border-slate-800/80 mb-5 cursor-pointer group-hover:border-cyan-500/40 transition-colors"
+        >
+          {projectImage ? (
+            <div className="relative w-full h-full">
+              <Image
+                src={projectImage}
+                alt={lang === "ar" ? project.titleAr : project.titleEn}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105 filter brightness-95 group-hover:brightness-100"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#05070B] via-transparent to-transparent opacity-80 pointer-events-none" />
+              
+              {/* Overlay Badge */}
+              <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-slate-950/80 border border-slate-700 text-[10px] font-mono text-cyan-300 backdrop-blur-sm">
+                Production Capture
+              </div>
+            </div>
+          ) : (
+            /* High-Fidelity Interactive DOCTECH EMR UI Simulation */
+            <div className="w-full h-full p-3.5 flex flex-col justify-between font-mono text-[10px] select-none bg-gradient-to-br from-slate-950 via-[#0A0E17] to-slate-900">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                  <span className="text-cyan-300 font-bold">DOCTECH OS // EMR KERNEL</span>
+                </div>
+                <span className="text-slate-400 text-[9px]">CLINIC SUITE v2.6</span>
+              </div>
 
-      {/* Simulated Interactive Mockup Window */}
-      <div className="mb-5">{renderMockup()}</div>
+              <div className="grid grid-cols-3 gap-1.5 my-2 text-[9px]">
+                <div className="bg-cyan-950/50 border border-cyan-500/40 text-cyan-300 p-2 rounded">
+                  <div className="text-[8px] text-cyan-400">PATIENT EMR</div>
+                  <div className="font-bold">Active File</div>
+                </div>
+                <div className="bg-slate-900/60 border border-slate-800 text-slate-300 p-2 rounded">
+                  <div className="text-[8px] text-slate-400">WHATSAPP AI</div>
+                  <div className="font-bold">Hermes Agent</div>
+                </div>
+                <div className="bg-slate-900/60 border border-slate-800 text-slate-300 p-2 rounded">
+                  <div className="text-[8px] text-slate-400">COLLISION RISK</div>
+                  <div className="font-bold text-emerald-400">0.00% Zero</div>
+                </div>
+              </div>
 
-      {/* Title & Tagline */}
-      <div className="mb-4">
-        <h3 className="text-xl sm:text-2xl font-black text-slate-100 group-hover:text-cyan-400 transition-colors flex items-center justify-between">
-          <span>{lang === "ar" ? project.titleAr : project.titleEn}</span>
-          <ArrowUpRight className="w-5 h-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              <div className="flex items-center justify-between bg-slate-950/90 p-2 rounded border border-slate-800/80 text-[9px]">
+                <div className="flex items-center gap-1.5 text-emerald-400">
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>Meta Cloud API: 24/7 Intake Online</span>
+                </div>
+                <span className="text-cyan-400 font-mono">&lt; 240ms Query</span>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Deep-Dive Hover Action Pill */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/50 backdrop-blur-xs">
+            <span className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(0,240,255,0.6)] flex items-center gap-1.5">
+              <span>{t.projects.viewCaseStudy}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+          </div>
+        </div>
+
+        {/* Project Title & Tagline */}
+        <h3
+          onClick={handleCardClick}
+          className="text-lg sm:text-xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors cursor-pointer mb-2"
+        >
+          {lang === "ar" ? project.titleAr : project.titleEn}
         </h3>
-        <p className="text-xs sm:text-sm text-slate-400 mt-2 line-clamp-2 font-sans leading-relaxed">
+
+        <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
           {lang === "ar" ? project.taglineAr : project.taglineEn}
         </p>
+
+        {/* 2 Key Architectural Metrics */}
+        <div className="grid grid-cols-2 gap-2 mb-4 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 font-mono">
+          {project.metrics.slice(0, 2).map((m, i) => (
+            <div key={i} className="flex flex-col">
+              <span className="text-[10px] text-slate-500 truncate">
+                {lang === "ar" ? m.labelAr : m.labelEn}
+              </span>
+              <span className="text-sm font-bold text-cyan-300 mt-0.5">
+                {m.value}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-2 gap-2 mb-4 py-2 border-y border-slate-800/80">
-        {project.metrics.slice(0, 2).map((m, i) => (
-          <div key={i} className="flex flex-col">
+      {/* Tech Stack Chips & Action Footer */}
+      <div>
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {project.techStack.slice(0, 4).map((tech, i) => (
             <span
-              className="text-base sm:text-lg font-bold font-mono"
-              style={{ color: project.accentColor }}
+              key={i}
+              className="px-2 py-0.5 rounded bg-slate-900/90 border border-slate-800 text-[10px] font-mono text-slate-300"
             >
-              {m.value}
+              {tech}
             </span>
-            <span className="text-[10px] font-sans text-slate-400">
-              {lang === "ar" ? m.labelAr : m.labelEn}
+          ))}
+          {project.techStack.length > 4 && (
+            <span className="px-1.5 py-0.5 rounded bg-slate-900 text-[10px] font-mono text-slate-500">
+              +{project.techStack.length - 4}
             </span>
-          </div>
-        ))}
-      </div>
+          )}
+        </div>
 
-      {/* Tech Stack Badges */}
-      <div className="flex flex-wrap gap-1.5 pt-1">
-        {project.techStack.slice(0, 4).map((tech) => (
-          <span
-            key={tech}
-            className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800/80 font-mono text-[10px] text-slate-300"
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800/80 text-xs font-mono">
+          <button
+            onClick={handleCardClick}
+            className="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 cursor-pointer"
           >
-            {tech}
-          </span>
-        ))}
-        {project.techStack.length > 4 && (
-          <span className="px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
-            +{project.techStack.length - 4}
-          </span>
-        )}
+            <span>{t.projects.viewCaseStudy}</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </button>
+
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-500 hover:text-slate-300 flex items-center gap-1"
+              title="Inspect Repository"
+            >
+              <span>Repo</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          )}
+        </div>
       </div>
     </motion.div>
   );
